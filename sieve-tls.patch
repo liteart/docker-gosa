@@ -1,0 +1,4 @@
+588a589,591
+>         while (sieve::status($buffer) == F_DATA) {
+>          @ $buffer = fgets ($this->fp,1024);
+>         }

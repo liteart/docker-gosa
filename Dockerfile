@@ -1,6 +1,6 @@
 # docker container running gosa
 
-FROM debian:jessie
+FROM fonk/debian
 MAINTAINER Frank Grötzner <frank@unforgotten.de>
 
 # set needed variables
@@ -13,7 +13,13 @@ ENV APACHE_LOG_DIR /var/log/apache2
 RUN apt-get update && \
     DEBIAN_FRONTEND=noninteractive \
     apt-get install -y --force-yes --no-install-recommends \
-    gosa gosa-plugin-*
+    gosa gosa-plugin-* \
+    openssl \
+    patch
+
+# patch gosa
+ADD sieve-tls.patch /tmp
+RUN patch /usr/share/gosa/plugins/personal/mail/sieve/class_sieve.inc < /tmp/sieve-tls.patch
 
 
 # Clean up APT when done.
